@@ -50,7 +50,7 @@ ionic cordova platform add ios
 ionic cordova plugin add path/to/cordova-plugin-mifare-classic
 
 # Or install from git repository
-ionic cordova plugin add https://github.com/yourusername/cordova-plugin-mifare-classic.git
+ionic cordova plugin add https://github.com/oldyangsir/cordova-plugin-mifare-classic.git
 
 # Add platforms
 ionic cordova platform add android
