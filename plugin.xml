@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-mifare-classic"
+        version="1.0.0">
+
+    <name>cordova-plugin-mifare-classic</name>
+    <description>Cordova plugin for reading MIFARE Classic NFC cards with sector-based data extraction</description>
+    <license>MIT</license>
+    <keywords>cordova,plugin,nfc,mifare,classic,ionic</keywords>
+    <repo>https://github.com/oldyangsir/cordova-plugin-mifare-classic.git</repo>
+    <issue>https://github.com/oldyangsir/cordova-plugin-mifare-classic/issues</issue>
+
+    <!-- JavaScript interface -->
+    <js-module src="www/cordova-plugin-mifare-classic.js" name="MifareClassicPlugin">
+        <clobbers target="cordova.plugins.MifareClassicPlugin" />
+    </js-module>
+
+    <!-- Android platform -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MifareClassicPlugin">
+                <param name="android-package" value="com.stayplease.mifareclassic.MifareClassicPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <!-- NFC permissions and features -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.NFC" />
+            <uses-feature android:name="android.hardware.nfc" android:required="true" />
+        </config-file>
+
+        <!-- NFC intent filters for MIFARE Classic -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+                       android:resource="@xml/nfc_tech_filter" />
+        </config-file>
+
+        <!-- NFC tech filter resource -->
+        <resource-file src="res/xml/nfc_tech_filter.xml" target="res/xml/nfc_tech_filter.xml" />
+
+        <!-- Source files -->
+        <source-file src="src/android/MifareClassicPlugin.java"
+                     target-dir="src/com/stayplease/mifareclassic" />
+
+        <!-- Minimum Android API level for NFC -->
+        <preference name="android-minSdkVersion" value="14" />
+    </platform>
+
+    <!-- iOS platform -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="MifareClassicPlugin">
+                <param name="ios-package" value="MifareClassicPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <!-- NFC capability requirement -->
+        <config-file target="*-Info.plist" parent="UIRequiredDeviceCapabilities">
+            <string>nfc</string>
+        </config-file>
+
+        <!-- NFC usage description -->
+        <config-file target="*-Info.plist" parent="NSNFCReaderUsageDescription">
+            <string>This app uses NFC to read MIFARE Classic cards</string>
+        </config-file>
+
+        <!-- NFC entitlements for Debug -->
+        <config-file target="*-Debug.plist" parent="com.apple.developer.nfc.readersession.formats">
+            <array>
+                <string>NDEF</string>
+                <string>TAG</string>
+            </array>
+        </config-file>
+
+        <!-- NFC entitlements for Release -->
+        <config-file target="*-Release.plist" parent="com.apple.developer.nfc.readersession.formats">
+            <array>
+                <string>NDEF</string>
+                <string>TAG</string>
+            </array>
+        </config-file>
+
+        <!-- Source files -->
+        <source-file src="src/ios/MifareClassicPlugin.m" />
+        <header-file src="src/ios/MifareClassicPlugin.h" />
+
+        <!-- Framework dependencies -->
+        <framework src="CoreNFC.framework" />
+
+        <!-- Minimum iOS version for Core NFC -->
+        <preference name="deployment-target" value="13.0" />
+    </platform>
+
+</plugin>

@@ -1,0 +1,19 @@
+{
+  "name": "cordova-plugin-mifare-classic",
+  "version": "1.0.0",
+  "description": "Cordova plugin for reading MIFARE Classic NFC cards with sector-based data extraction",
+  "cordova": {
+    "id": "cordova-plugin-mifare-classic",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Sean",
+  "license": "MIT"
+}
